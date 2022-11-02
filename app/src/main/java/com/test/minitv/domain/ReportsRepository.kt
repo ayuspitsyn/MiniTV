@@ -1,4 +1,4 @@
-package com.test.minitv.domain.model
+package com.test.minitv.domain
 
 interface ReportsRepository {
 

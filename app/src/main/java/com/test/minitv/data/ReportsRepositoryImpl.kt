@@ -1,6 +1,6 @@
 package com.test.minitv.data
 
-import com.test.minitv.domain.model.ReportsRepository
+import com.test.minitv.domain.ReportsRepository
 
 class ReportsRepositoryImpl: ReportsRepository {
 
