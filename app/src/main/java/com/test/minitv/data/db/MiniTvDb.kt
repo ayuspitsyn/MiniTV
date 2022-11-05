@@ -1,12 +1,13 @@
-package com.test.minitv.data
+package com.test.minitv.data.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.test.minitv.data.Report
 
-@Database (entities = [Reports::class], version = 1)
-abstract class MiniTvDb: RoomDatabase() {
+@Database(entities = [Report::class], version = 1)
+abstract class MiniTvDb : RoomDatabase() {
 
     abstract fun miniTvDao(): MiniTvDao
 

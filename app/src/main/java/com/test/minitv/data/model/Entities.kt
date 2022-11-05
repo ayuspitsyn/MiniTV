@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "reports")
-data class Reports (
+data class Report (
     @PrimaryKey (autoGenerate = true) val id: Int,
     @ColumnInfo val id_video: Int,
     @ColumnInfo val video_name: String,
-    @ColumnInfo val startTime: Date
+    @ColumnInfo val startTime: Long
 )

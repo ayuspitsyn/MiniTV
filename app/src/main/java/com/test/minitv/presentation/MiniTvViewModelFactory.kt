@@ -1,10 +1,20 @@
 package com.test.minitv.presentation
 
+import android.content.res.AssetManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.test.minitv.data.MiniTvRepositoryImpl
+import com.test.minitv.data.db.MiniTvDao
 
-class MiniTvViewModelFactory: ViewModelProvider.Factory {
+class MiniTvViewModelFactory(miniTvDao: MiniTvDao, assets: AssetManager) :
+    ViewModelProvider.Factory {
+
+    private val reportsRepository by lazy {
+        MiniTvRepositoryImpl(miniTvDao, assets)
+    }
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return super.create(modelClass)
+        //return super.create(modelClass)
+        return MiniTvViewModel(reportsRepository) as T
     }
 }

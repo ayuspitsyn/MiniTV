@@ -1,7 +1,19 @@
 package com.test.minitv.domain.model
 
-data class MiniTvVideo (
+import com.test.minitv.data.Report
+import java.util.*
+
+data class MiniTvVideo(
     val videoId: Int,
     val videoIdentifier: String,
-    val orderNumder: Int
+    val orderNumber: Int
 )
+
+fun MiniTvVideo.toReport(): Report {
+    return Report(
+        0,
+        videoId,
+        videoIdentifier,
+        Calendar.getInstance().timeInMillis
+    )
+}
