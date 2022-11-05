@@ -6,10 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.test.minitv.data.MiniTvDao
 import com.test.minitv.data.Reports
+import com.test.minitv.domain.ReportsRepository
+import com.test.minitv.domain.model.MiniTvVideo
 import kotlinx.coroutines.launch
 import java.net.URI
 
-class MiniTvViewModel(private val miniTvDao:MiniTvDao): ViewModel() {
+class MiniTvViewModel(private val miniTvDao:MiniTvDao,
+                      private val reportsRepository: ReportsRepository
+                      ): ViewModel() {
 
     private var _videoSource = MutableLiveData<URI>()
     val videoSource: LiveData<URI> = _videoSource
@@ -22,8 +26,12 @@ class MiniTvViewModel(private val miniTvDao:MiniTvDao): ViewModel() {
         super.onCleared()
     }
 
-    fun addToReports(report: Reports) = viewModelScope.launch{
-        miniTvDao.insert(report)
+//    fun addToReports(report: Reports) = viewModelScope.launch{
+//        miniTvDao.insert(report)
+//    }
+
+    fun addToReports (miniTvVideo: MiniTvVideo) = viewModelScope.launch {
+        reportsRepository.addToReports()
     }
 
 }
