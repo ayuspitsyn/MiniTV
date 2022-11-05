@@ -1,6 +1,7 @@
 package com.test.minitv.presentation
 
 import android.content.res.AssetFileDescriptor
+import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +27,6 @@ class MainActivity : AppCompatActivity()
         surfaceView = findViewById<SurfaceView>(R.id.surfaceView)
         surfaceHolder = surfaceView.holder
         surfaceHolder.addCallback(this@MainActivity)
-
     }
 
     override fun surfaceCreated(p0: SurfaceHolder) {
@@ -37,7 +37,10 @@ class MainActivity : AppCompatActivity()
             player.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
             player.prepare()
             player.setOnPreparedListener(this@MainActivity)
-            player.setAudioStreamType(AudioManager.STREAM_MUSIC)
+            player.setAudioAttributes(AudioAttributes
+                .Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build());
         } catch(e: java.lang.Exception) {
             Log.e("LOG_TAG", "Error="+e)
         }
@@ -48,17 +51,16 @@ class MainActivity : AppCompatActivity()
         stopPlayer()
     }
 
-    private fun stopPlayer() {
-        if(::player.isInitialized) {
-            player.release()
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         stopPlayer()
     }
 
+    private fun stopPlayer() {
+        if(::player.isInitialized) {
+            player.release()
+        }
+    }
     override fun surfaceChanged(p0: SurfaceHolder, p1: Int, p2: Int, p3: Int) {}
 
     override fun surfaceDestroyed(p0: SurfaceHolder) {}
