@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.test.minitv.MiniTvApp
@@ -73,7 +72,6 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, MediaPlayer.On
     }
 
     override fun onCompletion(mp: MediaPlayer?) {
-        Toast.makeText(this, "Next", Toast.LENGTH_SHORT).show()
         miniTvViewModel.getNext()
         if (mp == null) {
             player = MediaPlayer()

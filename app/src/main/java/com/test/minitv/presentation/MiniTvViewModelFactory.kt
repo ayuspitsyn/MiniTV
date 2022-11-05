@@ -14,7 +14,6 @@ class MiniTvViewModelFactory(miniTvDao: MiniTvDao, assets: AssetManager) :
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        //return super.create(modelClass)
         return MiniTvViewModel(reportsRepository) as T
     }
 }

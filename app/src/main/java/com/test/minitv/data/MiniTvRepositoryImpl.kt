@@ -8,7 +8,7 @@ import com.test.minitv.domain.MiniTvRepository
 import com.test.minitv.domain.model.MiniTvVideo
 import java.io.IOException
 
-const val MEDIA_LIST_PATH = "medialist.json"
+private const val MEDIA_LIST_PATH = "medialist.json"
 
 class MiniTvRepositoryImpl(
     private val miniTvDao: MiniTvDao,

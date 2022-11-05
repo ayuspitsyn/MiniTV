@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "com.test.minitv"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -46,14 +46,11 @@ dependencies {
 
 
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
-//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
 
-    // GSON
     implementation "com.google.code.gson:gson:2.9.0"
 
 
 
-    // Room
     implementation "androidx.room:room-runtime:2.5.0-beta01"
     implementation 'androidx.fragment:fragment:1.5.4'
     kapt "androidx.room:room-compiler:2.5.0-beta01"
