@@ -1,5 +1,6 @@
 package com.test.minitv.presentation
 
+import android.content.res.AssetFileDescriptor
 import android.media.AudioManager
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
@@ -8,23 +9,19 @@ import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import com.test.minitv.R
-import java.io.File
 
 class MainActivity : AppCompatActivity()
     ,  SurfaceHolder.Callback
     , MediaPlayer.OnPreparedListener
 {
 
-    private var surfaceView = SurfaceView(this)
+    private lateinit var surfaceView:SurfaceView // = SurfaceView(this)
     private lateinit var player: MediaPlayer
     private lateinit var surfaceHolder: SurfaceHolder
-    val filePath = File(cacheDir, "/VIDEOS")
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         surfaceView = findViewById<SurfaceView>(R.id.surfaceView)
         surfaceHolder = surfaceView.holder
@@ -36,10 +33,11 @@ class MainActivity : AppCompatActivity()
         player = MediaPlayer()
         player.setDisplay(surfaceHolder)
         try {
-            player.setDataSource(filePath.toString()) //TODO
+            val afd:AssetFileDescriptor = assets.openFd("videos/video8.mp4")
+            player.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
             player.prepare()
             player.setOnPreparedListener(this@MainActivity)
-//            player.setAudioStreamType(AudioManager.STREAM_MUSIC)
+            player.setAudioStreamType(AudioManager.STREAM_MUSIC)
         } catch(e: java.lang.Exception) {
             Log.e("LOG_TAG", "Error="+e)
         }
