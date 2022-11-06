@@ -1,11 +1,13 @@
 package com.test.minitv.domain
 
-import com.test.minitv.data.Report
 import com.test.minitv.domain.model.MiniTvVideo
 
 interface MiniTvRepository {
 
-    suspend fun addToReports(report: Report)
+    suspend fun prepare()
 
-    fun getNext(): MiniTvVideo
+    fun getNext(current: MiniTvVideo?): MiniTvVideo
+
+    suspend fun addToReports(current: MiniTvVideo)
+
 }

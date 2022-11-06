@@ -1,4 +1,4 @@
-package com.test.minitv.presentation
+package com.test.minitv.presentation.vm
 
 import android.content.res.AssetManager
 import androidx.lifecycle.ViewModel

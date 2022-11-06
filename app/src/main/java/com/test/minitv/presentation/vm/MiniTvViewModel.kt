@@ -1,4 +1,4 @@
-package com.test.minitv.presentation
+package com.test.minitv.presentation.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,26 +6,26 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.test.minitv.domain.MiniTvRepository
 import com.test.minitv.domain.model.MiniTvVideo
-import com.test.minitv.domain.model.toReport
 import kotlinx.coroutines.launch
 
 class MiniTvViewModel(private val miniTvRepository: MiniTvRepository) : ViewModel() {
 
-    private var _videoSource = MutableLiveData<String>()
-    val videoSource: LiveData<String> = _videoSource
+    private var _current = MutableLiveData<MiniTvVideo?>()
+    val current: LiveData<MiniTvVideo?> = _current
 
     init {
-        getNext()
+        viewModelScope.launch {
+            miniTvRepository.prepare()
+            getNext()
+        }
     }
 
     fun getNext() {
-        val currentVideo = miniTvRepository.getNext()
-        _videoSource.value = "videos/" + currentVideo.videoIdentifier
-        addToReports(currentVideo)
+        _current.value = miniTvRepository.getNext(current.value)
+        current.value?.let { addToReports(it) }
     }
 
     private fun addToReports(currentVideo: MiniTvVideo) = viewModelScope.launch {
-        miniTvRepository.addToReports(currentVideo.toReport())
+        miniTvRepository.addToReports(currentVideo)
     }
-
 }
