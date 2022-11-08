@@ -7,8 +7,6 @@ import com.test.minitv.data.db.MiniTvDao
 import com.test.minitv.data.model.toReport
 import com.test.minitv.domain.MiniTvRepository
 import com.test.minitv.domain.model.MiniTvVideo
-import kotlinx.coroutines.Dispatchers.Default
-import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class MiniTvRepositoryImpl(
@@ -16,15 +14,10 @@ class MiniTvRepositoryImpl(
     private val assets: AssetManager
 ) : MiniTvRepository {
 
-    private lateinit var medialist: List<MiniTvVideo>
-
-    override suspend fun prepare() = withContext(Default) {
+    override suspend fun getNext(current: MiniTvVideo?): MiniTvVideo {
         val mediaListJson: String? = getJsonFromAssets(MEDIA_LIST_PATH)
         val listType = object : TypeToken<List<MiniTvVideo>>() {}.type
-        medialist = Gson().fromJson(mediaListJson, listType)
-    }
-
-    override fun getNext(current: MiniTvVideo?): MiniTvVideo {
+        val medialist: List<MiniTvVideo> = Gson().fromJson(mediaListJson, listType)
         return if (current == null || current == medialist.last() || !medialist.contains(current)) {
             medialist.first()
         } else {

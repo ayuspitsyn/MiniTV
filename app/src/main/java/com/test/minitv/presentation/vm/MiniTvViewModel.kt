@@ -14,18 +14,13 @@ class MiniTvViewModel(private val miniTvRepository: MiniTvRepository) : ViewMode
     val current: LiveData<MiniTvVideo?> = _current
 
     init {
-        viewModelScope.launch {
-            miniTvRepository.prepare()
-            getNext()
-        }
+        getNext()
     }
 
     fun getNext() {
-        _current.value = miniTvRepository.getNext(current.value)
-        current.value?.let { addToReports(it) }
-    }
-
-    private fun addToReports(currentVideo: MiniTvVideo) = viewModelScope.launch {
-        miniTvRepository.addToReports(currentVideo)
+        viewModelScope.launch {
+            _current.value = miniTvRepository.getNext(current.value)
+            current.value?.let { miniTvRepository.addToReports(it) }
+        }
     }
 }
